@@ -9,6 +9,6 @@ public abstract class WebService {
 
     protected DataAccessObject dao;
 
-    public abstract DataAccessObject initDao();
+    public abstract void initDao();
 
 }

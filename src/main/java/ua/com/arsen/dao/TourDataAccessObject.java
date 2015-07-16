@@ -1,5 +1,6 @@
 package ua.com.arsen.dao;
 
+import org.springframework.stereotype.Component;
 import ua.com.arsen.entities.Tour;
 
 import java.sql.ResultSet;
@@ -11,7 +12,18 @@ import java.util.List;
 /**
  * Created by Thor on 12.07.2015.
  */
+@Component
 public class TourDataAccessObject extends DataAccessObject {
+
+    private String fake;
+
+    public void setFake(String fake) {
+        this.fake = fake;
+    }
+
+    public String getFake() {
+        return fake;
+    }
 
     public List<Tour> getTours() throws Exception {
         List<Tour> tours = new LinkedList<Tour>();

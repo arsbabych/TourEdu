@@ -1,5 +1,6 @@
 package ua.com.arsen.dao;
 
+import org.springframework.stereotype.Component;
 import ua.com.arsen.entities.Order;
 
 import java.sql.ResultSet;
@@ -11,6 +12,7 @@ import java.util.List;
 /**
  * Created by Thor on 12.07.2015.
  */
+@Component
 public class OrderDataAccessObject extends DataAccessObject {
 
     public List<Order> getOrders() throws SQLException {

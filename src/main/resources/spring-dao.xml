@@ -5,5 +5,17 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"
        xmlns:context="http://www.springframework.org/schema/context">
 
+    <context:annotation-config/>
+
+    <context:component-scan base-package="ua.com.arsen" />
+
+    <bean class="ua.com.arsen.dao.OrderDataAccessObject" />
+    <bean class="ua.com.arsen.dao.LocationDataAccessObject" />
+
+    <bean class="ua.com.arsen.dao.TourDataAccessObject" id="tourDaoObject">
+        <property name="fake" value="fakeFromSpring" />
+    </bean>
+
+    <bean class="ua.com.arsen.dao.CustomerDataAccessObject" />
 
 </beans>
