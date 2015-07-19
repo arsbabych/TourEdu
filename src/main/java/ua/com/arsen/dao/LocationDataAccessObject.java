@@ -36,7 +36,7 @@ public class LocationDataAccessObject extends DataAccessObject {
             }
 
         } finally {
-            connection.close();
+            closeConnention();
         }
 
         return locations;
@@ -52,7 +52,7 @@ public class LocationDataAccessObject extends DataAccessObject {
                     location.getHotelStatus()));
 
         } finally {
-            connection.close();
+            closeConnention();
         }
     }
 
@@ -66,7 +66,7 @@ public class LocationDataAccessObject extends DataAccessObject {
                     location.getHotelStatus(), id));
 
         } finally {
-            connection.close();
+            closeConnention();
         }
     }
 
@@ -78,7 +78,7 @@ public class LocationDataAccessObject extends DataAccessObject {
                     "address='%s' AND hotel_name='%s' AND hotel_status='%s'", country, city, address, hotelName, hotelStatus));
 
         } finally {
-            connection.close();
+            closeConnention();
         }
     }
 
@@ -88,7 +88,7 @@ public class LocationDataAccessObject extends DataAccessObject {
             statement.execute(String.format("DELETE FROM location WHERE id=%s", id));
 
         } finally {
-            connection.close();
+            closeConnention();
         }
     }
 

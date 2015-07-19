@@ -32,7 +32,7 @@ public class CustomerDataAccessObject extends DataAccessObject {
             }
 
         } finally {
-            connection.close();
+            closeConnention();
         }
 
         return customers;
@@ -47,7 +47,7 @@ public class CustomerDataAccessObject extends DataAccessObject {
                     customer.getName()));
 
         } finally {
-            connection.close();
+            closeConnention();
         }
     }
 
@@ -59,7 +59,7 @@ public class CustomerDataAccessObject extends DataAccessObject {
                     customer.getName(), id));
 
         } finally {
-            connection.close();
+            closeConnention();
         }
     }
 
@@ -70,7 +70,7 @@ public class CustomerDataAccessObject extends DataAccessObject {
             statement.execute(String.format("DELETE FROM customer WHERE name='%s'", name));
 
         } finally {
-            connection.close();
+            closeConnention();
         }
     }
 
@@ -81,7 +81,7 @@ public class CustomerDataAccessObject extends DataAccessObject {
             statement.execute(String.format("DELETE FROM customer WHERE id=%s", id));
 
         } finally {
-            connection.close();
+            closeConnention();
         }
     }
 

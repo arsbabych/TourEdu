@@ -1,14 +1,16 @@
 package ua.com.arsen.rest;
 
+import org.springframework.stereotype.Service;
 import ua.com.arsen.dao.DataAccessObject;
 
 /**
  * Created by Thor on 12.07.2015.
  */
+@Service
 public abstract class WebService {
 
-    protected DataAccessObject dao;
+    protected static DataAccessObject dao;
 
-    public abstract void initDao();
+    protected abstract void initDao();
 
 }

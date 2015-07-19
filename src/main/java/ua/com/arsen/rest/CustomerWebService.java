@@ -15,19 +15,23 @@ import java.sql.SQLException;
  */
 @Path("/customer")
 public class CustomerWebService extends WebService {
+
+    public CustomerWebService() {
+        initDao();
+    }
+
     @Override
     public void initDao() {
         ApplicationContext context = new ClassPathXmlApplicationContext("spring-dao.xml");
-        this.dao = context.getBean("customerDaoObject", CustomerDataAccessObject.class);
+        CustomerWebService.dao = context.getBean("customerDaoObject", CustomerDataAccessObject.class);
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("get")
     public Response getCustomers() {
-        CustomerDataAccessObject dao = new CustomerDataAccessObject();
         try {
-            return Response.ok().entity(dao.getCustomers()).build();
+            return Response.ok().entity(((CustomerDataAccessObject)dao).getCustomers()).build();
         } catch (Exception e) {
             e.printStackTrace();
             return Response.status(400).entity(e).build();
@@ -38,9 +42,8 @@ public class CustomerWebService extends WebService {
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("create")
     public Response createCustomer(Customer customer) {
-        CustomerDataAccessObject dao = new CustomerDataAccessObject();
         try {
-            dao.insertCustomer(customer);
+            ((CustomerDataAccessObject)dao).insertCustomer(customer);
         } catch (SQLException e) {
             e.printStackTrace();
             return Response.status(400).entity(e).build();
@@ -53,9 +56,8 @@ public class CustomerWebService extends WebService {
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("update/{id}")
     public Response updateCustomer(Customer customer, @PathParam("id") String id) {
-        CustomerDataAccessObject dao = new CustomerDataAccessObject();
         try {
-            dao.updateCustomer(customer, id);
+            ((CustomerDataAccessObject)dao).updateCustomer(customer, id);
         } catch (SQLException e) {
             e.printStackTrace();
             return Response.status(400).entity(e).build();
@@ -67,9 +69,8 @@ public class CustomerWebService extends WebService {
     @DELETE
     @Path("delete")
     public Response deleteCustomer(@QueryParam("name") String name) {
-        CustomerDataAccessObject dao = new CustomerDataAccessObject();
         try {
-            dao.deleteCustomerByPath(name);
+            ((CustomerDataAccessObject)dao).deleteCustomerByPath(name);
         } catch (SQLException e) {
             e.printStackTrace();
             return Response.status(400).entity(e).build();
@@ -81,9 +82,8 @@ public class CustomerWebService extends WebService {
     @DELETE
     @Path("delete/{id}")
     public Response deleteCustomer(@PathParam("id") int id) {
-        CustomerDataAccessObject dao = new CustomerDataAccessObject();
         try {
-            dao.deleteCustomerById(id);
+            ((CustomerDataAccessObject)dao).deleteCustomerById(id);
         } catch (SQLException e) {
             e.printStackTrace();
             return Response.status(400).entity(e).build();

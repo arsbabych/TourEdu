@@ -9,13 +9,26 @@
 
     <context:component-scan base-package="ua.com.arsen" />
 
-    <bean class="ua.com.arsen.dao.OrderDataAccessObject" />
-    <bean class="ua.com.arsen.dao.LocationDataAccessObject" />
+    <bean class="ua.com.arsen.dao.OrderDataAccessObject" id="orderDaoObject" />
+    <bean class="ua.com.arsen.dao.LocationDataAccessObject" id="locationDaoObject" />
+    <bean class="ua.com.arsen.dao.CustomerDataAccessObject" id="customerDaoObject" />
+    <bean class="ua.com.arsen.dao.TourDataAccessObject" id="tourDaoObject" />
 
-    <bean class="ua.com.arsen.dao.TourDataAccessObject" id="tourDaoObject">
-        <property name="fake" value="fakeFromSpring" />
+    <bean class="ua.com.arsen.rest.WebService" abstract="true" />
+    <bean class="ua.com.arsen.dao.DataAccessObject" abstract="true" />
+
+    <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+        <property name="staticMethod" value="ua.com.arsen.dao.DataAccessObject.setDataSource"/>
+        <property name="arguments">
+            <ref bean="dataSource"/>
+        </property>
     </bean>
 
-    <bean class="ua.com.arsen.dao.CustomerDataAccessObject" />
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource" autowire="byName">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+        <property name="url" value="jdbc:mysql://localhost/tour" />
+        <property name="username" value="root" />
+        <property name="password" value="123456789" />
+    </bean>
 
 </beans>

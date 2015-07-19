@@ -15,19 +15,23 @@ import java.sql.SQLException;
  */
 @Path("/location")
 public class LocationWebService extends WebService {
+
+    public LocationWebService() {
+        initDao();
+    }
+
     @Override
     public void initDao() {
         ApplicationContext context = new ClassPathXmlApplicationContext("spring-dao.xml");
-        this.dao = context.getBean("locationDaoObject", LocationDataAccessObject.class);
+        LocationWebService.dao = context.getBean("locationDaoObject", LocationDataAccessObject.class);
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("get")
     public Response getLocations() {
-        LocationDataAccessObject dao = new LocationDataAccessObject();
         try {
-            return Response.ok().entity(dao.getLocations()).build();
+            return Response.ok().entity(((LocationDataAccessObject)dao).getLocations()).build();
         } catch (Exception e) {
             e.printStackTrace();
             return Response.status(400).entity(e).build();
@@ -38,9 +42,8 @@ public class LocationWebService extends WebService {
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("create")
     public Response createLocation(Location location) {
-        LocationDataAccessObject dao = new LocationDataAccessObject();
         try {
-            dao.insertLocation(location);
+            ((LocationDataAccessObject)dao).insertLocation(location);
         } catch (Exception e) {
             e.printStackTrace();
             return Response.status(400).entity(e).build();
@@ -53,9 +56,8 @@ public class LocationWebService extends WebService {
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("update/{id}")
     public Response updateLocation(Location location, @PathParam("id") String id) {
-        LocationDataAccessObject dao = new LocationDataAccessObject();
         try {
-            dao.updateLocation(location, id);
+            ((LocationDataAccessObject)dao).updateLocation(location, id);
         } catch (SQLException e) {
             e.printStackTrace();
             return Response.status(400).entity(e).build();
@@ -69,9 +71,8 @@ public class LocationWebService extends WebService {
     public Response deleteLocation(@QueryParam("country") String country, @QueryParam("city") String city,
                                    @QueryParam("address") String address, @QueryParam("hotel_name") String hotelName,
                                    @QueryParam("hotel_status") String hotelStatus) {
-        LocationDataAccessObject dao = new LocationDataAccessObject();
         try {
-            dao.deleteLocationByPath(country, city, address, hotelName, hotelStatus);
+            ((LocationDataAccessObject)dao).deleteLocationByPath(country, city, address, hotelName, hotelStatus);
         } catch (SQLException e) {
             e.printStackTrace();
             return Response.status(400).entity(e).build();
@@ -83,9 +84,8 @@ public class LocationWebService extends WebService {
     @DELETE
     @Path("delete/{id}")
     public Response deleteLocation(@PathParam("id") String id) {
-        LocationDataAccessObject dao = new LocationDataAccessObject();
         try {
-            dao.deleteLocationById(id);
+            ((LocationDataAccessObject)dao).deleteLocationById(id);
         } catch (SQLException e) {
             e.printStackTrace();
             return Response.status(400).entity(e).build();

@@ -16,21 +16,20 @@ import java.sql.SQLException;
 @Path("/tour")
 public class TourWebService extends WebService {
 
-    public TourWebService() {
+     public TourWebService() {
         initDao();
     }
 
     @Override
     public void initDao() {
         ApplicationContext context = new ClassPathXmlApplicationContext("spring-dao.xml");
-        this.dao = context.getBean("tourDaoObject", TourDataAccessObject.class);
+        TourWebService.dao = context.getBean("tourDaoObject", TourDataAccessObject.class);
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("get")
     public Response getTours() {
-        //TourDataAccessObject dao = new TourDataAccessObject();
         try {
             return Response.ok().entity(((TourDataAccessObject)dao).getTours()).build();
         } catch (Exception e) {
@@ -43,9 +42,8 @@ public class TourWebService extends WebService {
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("create")
     public Response createTours(Tour tour) {
-        TourDataAccessObject dao = new TourDataAccessObject();
         try {
-            dao.insertTour(tour);
+            ((TourDataAccessObject)dao).insertTour(tour);
         } catch (Exception e) {
             e.printStackTrace();
             return Response.status(400).entity(e).build();
@@ -58,9 +56,8 @@ public class TourWebService extends WebService {
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("update/{id}")
     public Response updateTour(Tour tour, @PathParam("id") String id) {
-        TourDataAccessObject dao = new TourDataAccessObject();
         try {
-            dao.updateTour(tour, id);
+            ((TourDataAccessObject)dao).updateTour(tour, id);
         } catch (SQLException e) {
             e.printStackTrace();
             return Response.status(400).entity(e).build();
@@ -75,9 +72,8 @@ public class TourWebService extends WebService {
                                @QueryParam("start_date") String start_date,
                                @QueryParam("count_days") String count_days,
                                @QueryParam("price") String price) {
-        TourDataAccessObject dao = new TourDataAccessObject();
         try {
-            dao.deleteTourByPath(location_id, start_date, count_days, price);
+            ((TourDataAccessObject)dao).deleteTourByPath(location_id, start_date, count_days, price);
         } catch (SQLException e) {
             e.printStackTrace();
             return Response.status(400).entity(e).build();
@@ -89,9 +85,8 @@ public class TourWebService extends WebService {
     @DELETE
     @Path("delete/{id}")
     public Response deleteTour(@PathParam("id") String id) {
-        TourDataAccessObject dao = new TourDataAccessObject();
         try {
-            dao.deleteTourById(id);
+            ((TourDataAccessObject)dao).deleteTourById(id);
         } catch (SQLException e) {
             e.printStackTrace();
             return Response.status(400).entity(e).build();
@@ -106,9 +101,8 @@ public class TourWebService extends WebService {
     public Response getTourTillDate(@QueryParam("date") String date,
                                     @QueryParam("price") int price,
                                     @QueryParam("country") String country) {
-        TourDataAccessObject dao = new TourDataAccessObject();
         try {
-            return Response.ok().entity(dao.filterTours(date, price, country)).build();
+            return Response.ok().entity(((TourDataAccessObject)dao).filterTours(date, price, country)).build();
         } catch (Exception e) {
             e.printStackTrace();
             return Response.status(400).entity(e).build();

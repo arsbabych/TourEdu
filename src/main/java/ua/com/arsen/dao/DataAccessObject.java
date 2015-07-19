@@ -1,22 +1,49 @@
 package ua.com.arsen.dao;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import javax.sql.DataSource;
 import java.sql.Connection;
-import java.sql.DriverManager;
+import java.sql.SQLException;
+
 
 /**
  * Created by Thor on 12.07.2015.
  */
+@Service
 public abstract class DataAccessObject {
-    protected static Connection connection = getConnection();
+
+    @Autowired
+    protected static DataSource dataSource;
+
+    protected static Connection connection;
 
     public static Connection getConnection() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            return DriverManager.getConnection("jdbc:mysql://localhost/tour?user=root&password=123456789");
+            return dataSource.getConnection();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         return null;
+    }
+
+    public DataSource getDataSource() {
+        return dataSource;
+    }
+
+    public static void setDataSource(DataSource dataSource) {
+        DataAccessObject.dataSource = dataSource;
+        DataAccessObject.connection = getConnection();
+    }
+
+    protected void closeConnention() {
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

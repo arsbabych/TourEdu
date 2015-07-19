@@ -15,16 +15,6 @@ import java.util.List;
 @Component
 public class TourDataAccessObject extends DataAccessObject {
 
-    private String fake;
-
-    public void setFake(String fake) {
-        this.fake = fake;
-    }
-
-    public String getFake() {
-        return fake;
-    }
-
     public List<Tour> getTours() throws Exception {
         List<Tour> tours = new LinkedList<Tour>();
 
@@ -44,7 +34,7 @@ public class TourDataAccessObject extends DataAccessObject {
                 tours.add(tour);
             }
         } finally {
-            connection.close();
+            closeConnention();
         }
         return tours;
     }
@@ -57,7 +47,7 @@ public class TourDataAccessObject extends DataAccessObject {
                     tour.getLocationId(), tour.getStartDate().toString(), tour.getCountDays(), tour.getPrice()));
 
         } finally {
-            connection.close();
+            closeConnention();
         }
     }
 
@@ -69,7 +59,7 @@ public class TourDataAccessObject extends DataAccessObject {
                     tour.getLocationId(), tour.getStartDate().toString(), tour.getCountDays(), tour.getPrice(), id));
 
         } finally {
-            connection.close();
+            closeConnention();
         }
     }
 
@@ -81,7 +71,7 @@ public class TourDataAccessObject extends DataAccessObject {
                     "count_days=%s AND price=%s", location_id, start_date, count_days, price));
 
         } finally {
-            connection.close();
+            closeConnention();
         }
     }
 
@@ -91,7 +81,7 @@ public class TourDataAccessObject extends DataAccessObject {
             statement.execute(String.format("DELETE FROM tour WHERE id=%s", id));
 
         } finally {
-            connection.close();
+            closeConnention();
         }
     }
 
@@ -116,7 +106,7 @@ public class TourDataAccessObject extends DataAccessObject {
                 tours.add(tour);
             }
         } finally {
-            connection.close();
+            closeConnention();
         }
 
         return tours;

@@ -20,7 +20,7 @@ public class OrderDataAccessObject extends DataAccessObject {
 
         try {
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM order");
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM tour.order");
 
             while (resultSet.next()) {
                 Order order = new Order();
@@ -33,7 +33,7 @@ public class OrderDataAccessObject extends DataAccessObject {
             }
 
         } finally {
-            connection.close();
+            closeConnention();
         }
 
         return orders;
@@ -48,7 +48,7 @@ public class OrderDataAccessObject extends DataAccessObject {
                     order.getCustomerId(), order.getTourId()));
 
         } finally {
-            connection.close();
+            closeConnention();
         }
     }
 
@@ -59,7 +59,7 @@ public class OrderDataAccessObject extends DataAccessObject {
                     order.getCustomerId(), order.getTourId(), id));
 
         } finally {
-            connection.close();
+            closeConnention();
         }
     }
 
@@ -69,7 +69,7 @@ public class OrderDataAccessObject extends DataAccessObject {
             statement.execute(String.format("DELETE FROM order WHERE customer_id=%s AND tour_id=%s", customerId, tourId));
 
         } finally {
-            connection.close();
+            closeConnention();
         }
     }
 
@@ -79,7 +79,7 @@ public class OrderDataAccessObject extends DataAccessObject {
             statement.execute(String.format("DELETE FROM order WHERE id=%s", id));
 
         } finally {
-            connection.close();
+            closeConnention();
         }
     }
 
